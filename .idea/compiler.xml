@@ -10,8 +10,10 @@
         </processorPath>
         <module name="spring-security-review.server-basic-test.test" />
         <module name="spring-security-review.comp-common-utils.test" />
+        <module name="spring-security-review.server-login-basic.main" />
         <module name="spring-security-review.comp-common-utils.main" />
         <module name="spring-security-review.server-basic-test.main" />
+        <module name="spring-security-review.server-login-basic.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
