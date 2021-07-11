@@ -23,8 +23,7 @@ public class TeacherAuthenticationToken implements Authentication {
     private boolean authenticated;
     private Set<GrantedAuthority> authorities;
 
-
-//    @Override
+    //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
 //        return principal == null ? new HashSet<>() : principal.getRole();
 //    }

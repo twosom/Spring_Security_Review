@@ -21,9 +21,9 @@ public class TeacherAuthenticationProvider implements AuthenticationProvider, In
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
-        if (studentDB.containsKey(token.getName())) {
-            Teacher teacher = studentDB.get(token.getName());
+        TeacherAuthenticationToken token = (TeacherAuthenticationToken) authentication;
+        if (studentDB.containsKey(token.getCredentials())) {
+            Teacher teacher = studentDB.get(token.getCredentials());
             return TeacherAuthenticationToken.builder()
                     .principal(teacher)
                     .details(teacher.getUsername())
@@ -36,7 +36,7 @@ public class TeacherAuthenticationProvider implements AuthenticationProvider, In
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+        return TeacherAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     @Override
