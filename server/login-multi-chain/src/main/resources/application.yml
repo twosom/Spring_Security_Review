@@ -1,2 +1,8 @@
 server:
-  port: 9053
+  port: 9054
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false #SpringBoot 의 Thymeleaf 템플릿 결과는 템플릿 하는 것이 디폴트. 개발 시에는 false 로 해주는 것이 재시작 없이 새로고침만으로 바녕되게 하는것이 편함.
+    check-template-location: true
