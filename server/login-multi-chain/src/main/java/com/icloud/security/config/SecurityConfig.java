@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Order(2)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(studentAuthenticationProvider);
-        auth.authenticationProvider(teacherAuthenticationProvider);
+        auth.authenticationProvider(studentAuthenticationProvider)
+                .authenticationProvider(teacherAuthenticationProvider);
     }
 
     @Override
@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
                 .exceptionHandling()
                 .accessDeniedPage("/access-denied")
+//                .authenticationEntryPoint((request, response, authException) -> response.sendRedirect("/login"))
         .and()
                 .addFilterAt(customLoginFilter, UsernamePasswordAuthenticationFilter.class)
         ;
