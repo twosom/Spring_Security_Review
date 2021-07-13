@@ -1,0 +1,11 @@
+apply from: "../web-common.gradle"
+
+dependencies {
+    //== 각각의 Project 에서 Module 을 링크 ==//
+    implementation project(":web-user-admin")
+    implementation project(":comp-user-admin")
+
+    implementation "com.h2database:h2"
+
+    implementation("$boot:spring-boot-starter-data-jpa")
+}

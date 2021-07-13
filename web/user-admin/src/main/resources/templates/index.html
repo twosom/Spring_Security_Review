@@ -13,6 +13,12 @@
         <h1 class="title display-5"> 메인 페이지 </h1>
     </div>
 
+    <div class="row">
+        <div class="col-12 align-items-center">
+            SESSION ID : <span th:text="${sessionId}">SESSION_ID</span>
+        </div>
+    </div>
+
     <div class="links">
 
         <div class="link" sec:authorize="isAnonymous()">
@@ -30,8 +36,10 @@
                 <button type="submit" class="btn btn-info">로그 아웃</button>
             </form>
         </div>
+
+
     </div>
 </div>
-<script th:src="@{/js/bootstrap.js}"/>
+<script th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>
