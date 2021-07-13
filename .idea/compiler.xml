@@ -9,11 +9,13 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.20/18bcea7d5df4d49227b4a0743a536208ce4825bb/lombok-1.18.20.jar" />
         </processorPath>
         <module name="spring-security-review.comp-user-admin.main" />
+        <module name="spring-security-review.server-login-rememberme.test" />
         <module name="spring-security-review.server-login-multi-chain.main" />
         <module name="spring-security-review.server-login-custom-filter.main" />
         <module name="spring-security-review.server-login-userdetails.main" />
         <module name="spring-security-review.web-user-admin.main" />
         <module name="spring-security-review.server-basic-test.main" />
+        <module name="spring-security-review.server-login-rememberme.main" />
         <module name="spring-security-review.comp-common-utils.test" />
         <module name="spring-security-review.server-basic-authentication-test.test" />
         <module name="spring-security-review.server-login-basic.main" />
