@@ -5,4 +5,6 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
     implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 
+    //== 각각의 Project 에서 Module 을 링크 ==//
+    implementation project(":web-user-admin")
 }
