@@ -30,6 +30,8 @@
         <module name="spring-security-review.server-login-multi-chain.test" />
         <module name="spring-security-review.web-student-teacher.main" />
         <module name="spring-security-review.server-login-userdetails.test" />
+        <module name="spring-security-review.server-login-session-management.test" />
+        <module name="spring-security-review.server-login-session-management.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
