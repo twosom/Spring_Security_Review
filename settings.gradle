@@ -9,7 +9,7 @@
 
 rootProject.name = 'spring-security-review'
 
-['web', 'comp', 'server'].each {
+['web', 'test', 'comp', 'server'].each {
 
     def compDir = new File(rootDir, it)
     if (!compDir.exists()) compDir.mkdirs()

@@ -1,0 +1,3 @@
+dependencies {
+    implementation("$boot:spring-boot-starter-test")
+}
