@@ -14,7 +14,7 @@ public class HomeController {
     private final SecurityMessageService securityMessageService;
 
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("@nameCheck.check(#name)")
     @GetMapping("/greeting/{name}")
     public String greeting(@PathVariable("name") String name) {
         return "hello " + securityMessageService.message(name);

@@ -80,8 +80,6 @@ public class SpELTest {
 
         assertTrue(parser.parseExpression("@person.over(170)").getValue(context, Boolean.class));
         assertFalse(parser.parseExpression("@nancy.over(170)").getValue(context, Boolean.class));
-
-
     }
 
 
