@@ -1,5 +1,6 @@
 package com.icloud.security.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,6 +17,7 @@ import org.springframework.security.web.FilterInvocation;
 import java.util.Collection;
 
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -49,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
 
         http.authorizeRequests()
-                .mvcMatchers("/greeting").hasRole("USER")
+                .mvcMatchers("/greeting/{name}").access("@nameCheck.check(#name)")
                 .anyRequest().authenticated()
 //                .accessDecisionManager(filterAccessDecisionManager())
                 ;
@@ -62,6 +64,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         User.withDefaultPasswordEncoder()
                                 .username("user1")
                                 .password("1111")
-                                .roles("USER"));
+                                .roles("USER", "STUDENT"))
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("user2")
+                                .password("1111")
+                                .roles("USER", "STUDENT"))
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("tutor1")
+                                .password("1111")
+                                .roles("USER", "TUTOR"));
     }
 }
