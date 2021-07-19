@@ -3,19 +3,19 @@ package com.icloud.security.config;
 import com.icloud.security.service.Paper;
 import com.icloud.security.service.PaperService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 @Component
-@RequiredArgsConstructor
 public class CustomPermissionEvaluator implements PermissionEvaluator {
 
-    private final PaperService paperService;
+    @Lazy
+    private PaperService paperService;
 
     @Override
     public boolean hasPermission(Authentication authentication,

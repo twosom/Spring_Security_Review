@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import static com.icloud.security.service.Paper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
@@ -20,16 +21,17 @@ public class PaperTest extends WebIntegrationTest {
     private PaperService paperService;
     TestRestTemplate client;
 
-    private final Paper paper1 = createPaper(1L, "시험지1", "user1");
-    private final Paper paper2 = createPaper(2L, "시험지2", "user2");
+    private final Paper paper1 = createPaper(1L, "시험지1", State.PREPARE, "user1");
+    private final Paper paper2 = createPaper(2L, "시험지2", State.READY, "user2");
+    private final Paper paper3 = createPaper(3L, "시험지3", State.READY, "user1");
 
-    private Paper createPaper(long paperId, String title, String... studentIds) {
-        return Paper.builder()
+    private Paper createPaper(long paperId, String title, State state, String... studentIds) {
+        return builder()
                 .paperId(paperId)
                 .title(title)
                 .tutorId("tutor1")
                 .studentIds(List.of(studentIds))
-                .state(Paper.State.PREPARE)
+                .state(state)
                 .build();
     }
 
@@ -38,10 +40,17 @@ public class PaperTest extends WebIntegrationTest {
     @Test
     void test_1() {
         paperService.setPaper(paper1);
+        paperService.setPaper(paper2);
+        paperService.setPaper(paper3);
 
         client = new TestRestTemplate("user1", "1111");
         ResponseEntity<List> response = client.getForEntity(uri("/paper/mypapers"), List.class);
+
+
         assertEquals(OK, response.getStatusCode());
+        assertEquals(1, response.getBody().size());
+
+
         List<Paper> body = response.getBody();
         System.out.println("body = " + body);
     }
@@ -51,7 +60,7 @@ public class PaperTest extends WebIntegrationTest {
     @Test
     void test_2() throws Exception {
         paperService.setPaper(paper2);
-        client = new TestRestTemplate("user2", "1111");
+        client = new TestRestTemplate("user1", "1111");
         ResponseEntity<Paper> response = client.getForEntity(uri("/paper/get/2"), Paper.class);
         assertEquals(FORBIDDEN, response.getStatusCode());
     }
