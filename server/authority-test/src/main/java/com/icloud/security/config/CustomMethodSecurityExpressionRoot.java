@@ -1,11 +1,14 @@
 package com.icloud.security.config;
 
+import com.icloud.security.service.Paper;
 import lombok.Getter;
 import lombok.Setter;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
+
+import static com.icloud.security.service.Paper.State;
 
 @Getter @Setter
 public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
@@ -17,6 +20,11 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
     public CustomMethodSecurityExpressionRoot(Authentication authentication, MethodInvocation invocation) {
         super(authentication);
         this.invocation = invocation;
+    }
+
+
+    public boolean notPrepareState(Paper paper) {
+        return !paper.getState().equals(State.PREPARE);
     }
 
     public boolean isStudent() {
