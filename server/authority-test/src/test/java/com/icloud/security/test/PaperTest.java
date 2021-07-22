@@ -22,7 +22,7 @@ public class PaperTest extends WebIntegrationTest {
     TestRestTemplate client;
 
     private final Paper paper1 = createPaper(1L, "시험지1", State.PREPARE, "user1");
-    private final Paper paper2 = createPaper(2L, "시험지2", State.READY, "user2");
+    private final Paper paper2 = createPaper(2L, "시험지2", State.PREPARE, "user2");
     private final Paper paper3 = createPaper(3L, "시험지3", State.READY, "user1");
 
     private Paper createPaper(long paperId, String title, State state, String... studentIds) {
@@ -72,6 +72,20 @@ public class PaperTest extends WebIntegrationTest {
         client = new TestRestTemplate("user2", "1111");
         ResponseEntity<Paper> response = client.getForEntity(uri("/paper/get/2"), Paper.class);
         assertEquals(FORBIDDEN, response.getStatusCode());
+    }
+
+    @DisplayName("5. 교장선생님은 모든 시험지를 볼 수 있다.")
+    @Test
+    void test_5() throws Exception {
+        paperService.setPaper(paper1);
+        paperService.setPaper(paper2);
+        paperService.setPaper(paper3);
+        client = new TestRestTemplate("primary", "1111");
+
+        ResponseEntity<List> response = client.getForEntity(uri("/paper/getPapersByPrimary"), List.class);
+        assertEquals(OK, response.getStatusCode());
+        assertEquals(3, response.getBody().size());
+
     }
 
 }

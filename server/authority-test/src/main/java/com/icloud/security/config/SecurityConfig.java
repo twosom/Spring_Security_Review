@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/greeting/{name}").access("@nameCheck.check(#name)")
                 .anyRequest().authenticated()
 //                .accessDecisionManager(filterAccessDecisionManager())
-                ;
+        ;
     }
 
     @Override
@@ -76,7 +76,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         User.withDefaultPasswordEncoder()
                                 .username("tutor1")
                                 .password("1111")
-                                .roles("USER", "TUTOR"));
+                                .roles("USER", "TUTOR"))
+                .withUser(
+                        User.withDefaultPasswordEncoder()
+                                .username("primary")
+                                .password("1111")
+                                .roles("USER", "PRIMARY"))
+        ;
 
     }
 }

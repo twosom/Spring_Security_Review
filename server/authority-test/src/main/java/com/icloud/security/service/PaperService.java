@@ -36,4 +36,11 @@ public class PaperService {
     }
 
 
+
+    public List<Paper> getAllPapers() {
+        return paperDB
+                .values()
+                .stream()
+                .collect(Collectors.toList());
+    }
 }
