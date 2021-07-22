@@ -9,6 +9,7 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.ExpressionBasedPreInvocationAdvice;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
+import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.prepost.PreInvocationAuthorizationAdviceVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
@@ -20,7 +21,7 @@ import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.List;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
@@ -44,6 +45,11 @@ public class MethodSecurityConfiguration extends GlobalMethodSecurityConfigurati
     }
 
     @Override
+    protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
+        return new CustomSecurityMetadataSource();
+    }
+
+    @Override
     protected AccessDecisionManager accessDecisionManager() {
         List<AccessDecisionVoter<?>> decisionVoters = new ArrayList<>();
         ExpressionBasedPreInvocationAdvice expressionAdvice = new ExpressionBasedPreInvocationAdvice();
@@ -52,7 +58,7 @@ public class MethodSecurityConfiguration extends GlobalMethodSecurityConfigurati
         decisionVoters.add(new PreInvocationAuthorizationAdviceVoter(expressionAdvice));
         decisionVoters.add(new RoleVoter());
         decisionVoters.add(new AuthenticatedVoter());
-//        decisionVoters.add(new CustomVoter());
+        decisionVoters.add(new CustomVoter());
 
         return new AffirmativeBased(decisionVoters);
 //        ConsensusBased consensusBased = new ConsensusBased(decisionVoters);

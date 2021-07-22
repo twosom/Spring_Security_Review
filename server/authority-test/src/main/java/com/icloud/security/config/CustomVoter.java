@@ -3,15 +3,18 @@ package com.icloud.security.config;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 
 public class CustomVoter implements AccessDecisionVoter<MethodInvocation> {
 
+    private final String PREFIX = "SCHOOL_";
+
     @Override
     public boolean supports(ConfigAttribute attribute) {
-        return true;
+        return attribute.getAttribute().startsWith(PREFIX);
     }
 
     @Override
@@ -21,6 +24,22 @@ public class CustomVoter implements AccessDecisionVoter<MethodInvocation> {
 
     @Override
     public int vote(Authentication authentication, MethodInvocation object, Collection<ConfigAttribute> attributes) {
-        return ACCESS_GRANTED;
+        String role = attributes
+                .stream()
+                .filter(attr -> attr.getAttribute().startsWith(PREFIX))
+                .map(attr -> attr.getAttribute().substring(PREFIX.length()))
+                .findFirst()
+                .get();
+
+        boolean hasRole = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_" + role.toUpperCase()));
+
+        if (hasRole) {
+            return ACCESS_GRANTED;
+        }
+
+        return ACCESS_DENIED;
     }
 }

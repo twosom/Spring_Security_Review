@@ -3,6 +3,7 @@ package com.icloud.security.controller;
 import com.icloud.security.service.Paper;
 import com.icloud.security.service.PaperService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -27,9 +28,13 @@ public class PaperController {
         return paperService.getMyPapers(user.getUsername());
     }
 
+    @CustomSecurityTag("SCHOOL_PRIMARY")
+    @GetMapping("/getPapersByPrimary")
+    public List<Paper> getPapersByPrimary(@AuthenticationPrincipal User user) {
+        return paperService.getAllPapers();
+    }
 
-
-    @PostAuthorize("returnObject.studentIds.contains(#user.username)")
+    @PostAuthorize("returnObject.studentIds.contains(#user.username) && returnObject.state != T(com.icloud.security.service.Paper.State).PREPARE")
     @GetMapping("/get/{paperId}")
     public Paper getPaper(@AuthenticationPrincipal User user, @PathVariable("paperId") Long paperId) {
         return paperService.getPaper(paperId);
