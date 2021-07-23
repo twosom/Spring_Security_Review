@@ -28,6 +28,12 @@ public class PaperController {
         return paperService.getMyPapers(user.getUsername());
     }
 
+    @Secured({"ROLE_USER", "RUN_AS_PRIMARY"})
+    @GetMapping("/allpapers")
+    public List<Paper> allPapers(@AuthenticationPrincipal User user) {
+        return paperService.getAllPapers();
+    }
+
     @CustomSecurityTag("SCHOOL_PRIMARY")
     @GetMapping("/getPapersByPrimary")
     public List<Paper> getPapersByPrimary(@AuthenticationPrincipal User user) {
