@@ -5,8 +5,10 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public class CustomVoter implements AccessDecisionVoter<MethodInvocation> {
 
@@ -29,14 +31,12 @@ public class CustomVoter implements AccessDecisionVoter<MethodInvocation> {
                 .filter(attr -> attr.getAttribute().startsWith(PREFIX))
                 .map(attr -> attr.getAttribute().substring(PREFIX.length()))
                 .findFirst()
-                .get();
-
-        boolean hasRole = authentication
+                .orElseGet(() -> null);
+        Stream<? extends GrantedAuthority> stream = authentication
                 .getAuthorities()
-                .stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ROLE_" + role.toUpperCase()));
+                .stream();
 
-        if (hasRole) {
+        if (role != null && stream.anyMatch(auth -> auth.getAuthority().equals("ROLE_" + role.toUpperCase()))) {
             return ACCESS_GRANTED;
         }
 

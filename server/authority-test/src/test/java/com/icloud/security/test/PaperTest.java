@@ -6,12 +6,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 import static com.icloud.security.service.Paper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -88,4 +91,21 @@ public class PaperTest extends WebIntegrationTest {
 
     }
 
+    @DisplayName("6. 사용자 user1이 임시로 교장선생님 권한을 얻어서 시험지를 가져온다.")
+    @Test
+    void test_6() {
+        paperService.setPaper(paper1);
+        paperService.setPaper(paper2);
+        paperService.setPaper(paper3);
+
+        client = new TestRestTemplate("user1", "1111");
+
+        ResponseEntity<List<Paper>> response = client.exchange(uri("/paper/allpapers"), GET, null, new ParameterizedTypeReference<List<Paper>>() {
+        });
+
+        assertEquals(OK, response.getStatusCode());
+        assertEquals(3, response.getBody().size());
+        System.out.println("response.getBody() = " + response.getBody());
+
+    }
 }

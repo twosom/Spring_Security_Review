@@ -9,6 +9,8 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.ExpressionBasedPreInvocationAdvice;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
+import org.springframework.security.access.intercept.RunAsManager;
+import org.springframework.security.access.intercept.RunAsManagerImpl;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.access.prepost.PreInvocationAuthorizationAdviceVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -25,6 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
+    public static final String RUNAS = "runas";
     private final CustomPermissionEvaluator permissionEvaluator;
 
 
@@ -42,6 +45,13 @@ public class MethodSecurityConfiguration extends GlobalMethodSecurityConfigurati
 
         handler.setPermissionEvaluator(permissionEvaluator);
         return handler;
+    }
+
+    @Override
+    protected RunAsManager runAsManager() {
+        RunAsManagerImpl runAsManager = new RunAsManagerImpl();
+        runAsManager.setKey(RUNAS);
+        return runAsManager;
     }
 
     @Override

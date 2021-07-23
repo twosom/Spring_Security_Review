@@ -1,5 +1,6 @@
 package com.icloud.security.service;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,6 @@ public class PaperService {
 
     @PostFilter("notPrepareState(filterObject)")
     public List<Paper> getMyPapers(String username) {
-//        return paperDB
-//                .values()
-//                .stream().collect(Collectors.toList());
         return paperDB
                 .values()
                 .stream()
@@ -36,7 +34,7 @@ public class PaperService {
     }
 
 
-
+    @Secured({"ROLE_PRIMARY", "ROLE_RUN_AS_PRIMARY"})
     public List<Paper> getAllPapers() {
         return paperDB
                 .values()
