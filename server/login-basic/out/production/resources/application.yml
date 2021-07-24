@@ -9,6 +9,7 @@ spring:
     restart:
       enabled: true
 
+  #== Thymeleaf 를 Module 에서 발견하기 위해서 아래와 같이 설정 ==#
   thymeleaf:
     prefix: classpath:/templates/
     cache: false
