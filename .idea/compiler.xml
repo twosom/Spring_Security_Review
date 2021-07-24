@@ -22,6 +22,7 @@
         <module name="spring-security-review.server-login-userdetails.test" />
         <module name="spring-security-review.test-web-util.main" />
         <module name="spring-security-review.server-login-session-management.test" />
+        <module name="spring-security-review.comp-paper-user.main" />
         <module name="spring-security-review.comp-user-admin.main" />
         <module name="spring-security-review.server-login-rememberme.test" />
         <module name="spring-security-review.server-login-multi-chain.main" />
@@ -33,6 +34,7 @@
         <module name="spring-security-review.server-login-custom-filter.test" />
         <module name="spring-security-review.web-user-admin.test" />
         <module name="spring-security-review.test-web-util.test" />
+        <module name="spring-security-review.comp-paper-user.test" />
         <module name="spring-security-review.comp-user-admin.test" />
         <module name="spring-security-review.web-student-teacher.test" />
         <module name="spring-security-review.server-basic-test.test" />
