@@ -2,7 +2,6 @@ package com.icloud.security.config;
 
 import com.icloud.security.service.Paper;
 import com.icloud.security.service.PaperService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.PermissionEvaluator;
